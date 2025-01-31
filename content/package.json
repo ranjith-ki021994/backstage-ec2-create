@@ -1,0 +1,5 @@
+{
+    "name": "backstage_ec2_create",
+    "private": true,
+    "dependencies": {}
+}

@@ -1,0 +1,18 @@
+
+apiVersion: backstage.io/v1alpha1
+kind: Resource
+metadata:
+  name: backstage-ec2-create
+  description: Contains the EC2 instance for backstage-ec2-create
+  annotations:
+
+    backstage.io/kubernetes-id: backstage-ec2-create
+    backstage.io/techdocs-ref: dir:.
+    github.com/project-slug: sishwarya/backstage-ec2-create
+spec:
+  type: 
+  system: system:default/examples
+  lifecycle: production
+  owner: group:default/guests
+  dependsOn:
+    - component:default/example-website
