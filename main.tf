@@ -5,7 +5,6 @@ terraform {
       version = "~> 4.16"
     }
   }
-
   required_version = ">= 1.2.0"
 }
 
@@ -13,14 +12,17 @@ provider "aws" {
   region     = var.awsRegion
   access_key = var.access_key
   secret_key = var.secret_key
-  #   profile = "sagar"
 }
 
-resource "aws_instance" "example_server" {
-  ami           = "ami-0c7217cdde317cfec"
+resource "aws_instance" "example" {
+  ami           = "ami-0c55b159cbfafe1f0"
   instance_type = var.instanceType
 
   tags = {
     Name = var.instanceName
   }
+}
+
+output "instance_public_ip" {
+  value = aws_instance.example.public_ip
 }
