@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Execute this step only if the action input is "apply"
-    if: false
+    if: ${{ github.event.inputs.action == 'apply' }}
     # Define the steps for this job
     steps:
 
@@ -46,10 +46,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: 
-          aws-secret-access-key: 
-          aws-session-token: 
-          aws-region: 
+          aws-access-key-id: ${{ github.event.inputs.aws_access_key }}
+          aws-secret-access-key: ${{ github.event.inputs.aws_secret_key }}
+          aws-session-token: ${{ github.event.inputs.aws_session_token }}
+          aws-region: ${{ github.event.inputs.awsRegion }}
 
       # Initialize Terraform
       - name: Terraform Init
@@ -69,7 +69,7 @@ jobs:
       # Apply the Terraform plan
 
       - name: terraform apply
-        run: terraform apply -var instanceName= -var awsRegion= -var instanceType= -auto-approve
+        run: terraform apply -var instanceName=${{ github.event.inputs.instanceName }} -var awsRegion=${{ github.event.inputs.awsRegion }} -var instanceType=${{ github.event.inputs.instanceType }} -auto-approve
         working-directory: .
 
   # Destroying the  ec2 instance
@@ -77,7 +77,7 @@ jobs:
     runs-on: ubuntu-latest
 
     # Execute this job only if the action input is "destroy"
-    if: false
+    if: ${{ github.event.inputs.action == 'destroy' }}
 
     steps:
       - name: Checkout code
@@ -87,10 +87,10 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
-          aws-access-key-id: 
-          aws-secret-access-key: 
-          aws-session-token: 
-          aws-region: 
+          aws-access-key-id: ${{ github.event.inputs.aws_access_key }}
+          aws-secret-access-key: ${{ github.event.inputs.aws_secret_key }}
+          aws-session-token: ${{ github.event.inputs.aws_session_token }}
+          aws-region: ${{ github.event.inputs.awsRegion }}
 
       - name: Terraform Init
         run: terraform init
@@ -104,5 +104,6 @@ jobs:
       # Destroy all resources
       - name: Terraform Destroy
       - name: terraform apply
-        run: terraform destroy -var instanceName= -var awsRegion= -auto-approve
+        run: terraform destroy -var instanceName=${{ github.event.inputs.instanceName }} -var awsRegion=${{ github.event.inputs.awsRegion }} -auto-approve
         working-directory: .
+
