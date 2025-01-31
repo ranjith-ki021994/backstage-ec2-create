@@ -67,8 +67,9 @@ jobs:
         working-directory: .
 
       # Apply the Terraform plan
+
       - name: terraform apply
-        run: terraform apply -var instanceName=${{ github.event.inputs.instanceName }} -var awsRegion=${{ github.event.inputs.awsRegion }} -var instanceType=${{ github.event.inputs.instanceType }} -auto-approve
+        run: terraform apply -var "instanceName=${{ github.event.inputs.instanceName }}" -var "awsRegion=${{ github.event.inputs.awsRegion }}" -var "instanceType=${{ github.event.inputs.instanceType }}" -auto-approve
         working-directory: .
 
   # Destroying the  ec2 instance
@@ -99,9 +100,9 @@ jobs:
         run: terraform fmt
         working-directory: .
 
+
       # Destroy all resources
       - name: Terraform Destroy
-      - name: terraform apply
-        run: terraform destroy -var instanceName=${{ github.event.inputs.instanceName }} -var awsRegion=${{ github.event.inputs.awsRegion }} -auto-approve
+        run: terraform destroy -var "instanceName=${{ github.event.inputs.instanceName }} -var awsRegion=${{ github.event.inputs.awsRegion }}" -auto-approve
         working-directory: .
 
